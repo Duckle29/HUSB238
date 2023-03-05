@@ -21,7 +21,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: arduino/arduino-lint-action@v1
         with:
           library-manager: update
@@ -56,15 +56,12 @@ jobs:
         include:
           - arduino-boards-fqbn: digistump:avr:digispark-tiny:clock=clock1  # ATtiny85 board @1 MHz
             platform-url: https://raw.githubusercontent.com/ArminJo/DigistumpArduino/master/package_digistump_index.json
-            sketches-exclude: hardi2c,stretchTest,I2CShell,EepromFill
 
           - arduino-boards-fqbn: digistump:avr:digispark-pro
             platform-url: https://raw.githubusercontent.com/ArminJo/DigistumpArduino/master/package_digistump_index.json
-            sketches-exclude: hardi2c,stretchTest,I2CShell
 
           - arduino-boards-fqbn: ATTinyCore:avr:attinyx5:chip=85,clock=1internal
             platform-url: http://drazzy.com/package_drazzy.com_index.json
-            sketches-exclude: hardi2c,stretchTest,I2CShell
 
       # Do not cancel all jobs / architectures if one job fails
       fail-fast: false
@@ -74,9 +71,8 @@ jobs:
         uses: actions/checkout@master
 
       - name: Compile all examples
-        uses: ArminJo/arduino-test-compile@master
+        uses: ArminJo/arduino-test-compile@v3
         with:
           arduino-board-fqbn: ${{ matrix.arduino-boards-fqbn }}
           platform-url: ${{ matrix.platform-url }}
-          sketches-exclude: tinywire,usiwire,slowwire,${{ matrix.sketches-exclude }}
           build-properties: ${{ toJson(matrix.build-properties) }}
