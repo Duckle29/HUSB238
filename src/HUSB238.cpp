@@ -1,13 +1,13 @@
 #include "HUSB238.h"
 
-HUSB238::HUSB238(TwoWire my_wire)
+HUSB238::HUSB238(TwoWire* myWire = &Wire)
 {
-    m_my_wire = m_my_wire;    
+    m_wire = myWire;
 }
 
 uint64_t HUSB238::begin()
 {
-    m_my_wire.begin();
+    m_wire->begin();
     return get_capabilities();
 }
 
@@ -22,9 +22,9 @@ uint64_t HUSB238::get_capabilities()
         // As the pdo registers are consecutive, we can iterate through them
         uint8_t pdo_register = REG_SRC_PDO_5V + i;
 
-        m_my_wire.beginTransmission(m_i2c_address);
+        m_wire->beginTransmission(m_i2c_address);
         uint8_t response = m_read_byte_from_register(pdo_register);
-        return_codes |= (m_my_wire.endTransmission() << i*8);
+        return_codes |= (m_wire->endTransmission() << i*8);
         
         if (!bitRead(response, 7))
         {
@@ -45,23 +45,23 @@ uint64_t HUSB238::get_capabilities()
 
 void HUSB238::set_voltage(voltage_select voltage)
 {
-    m_my_wire.beginTransmission(m_i2c_address);
-    m_my_wire.write(REG_SRC_PDO);
-    m_my_wire.write(voltage);
-    m_my_wire.endTransmission();
+    m_wire->beginTransmission(m_i2c_address);
+    m_wire->write(REG_SRC_PDO);
+    m_wire->write(voltage);
+    m_wire->endTransmission();
 
-    m_my_wire.beginTransmission(m_i2c_address);
-    m_my_wire.write(REG_GO_COMMAND);
-    m_my_wire.write(1);
-    m_my_wire.endTransmission();
+    m_wire->beginTransmission(m_i2c_address);
+    m_wire->write(REG_GO_COMMAND);
+    m_wire->write(1);
+    m_wire->endTransmission();
 }
 
 uint8_t HUSB238::update_pd_status()
 {
-    m_my_wire.beginTransmission(m_i2c_address);
+    m_wire->beginTransmission(m_i2c_address);
     status.PD_STATUS0 = m_read_byte_from_register(REG_PD_STATUS0);
     status.PD_STATUS1 = m_read_byte_from_register(REG_PD_STATUS0);
-    return m_my_wire.endTransmission();
+    return m_wire->endTransmission();
 }
 
 uint8_t HUSB238::get_pd_voltage()
@@ -87,8 +87,8 @@ uint16_t HUSB238::get_pd_current()
 
 uint8_t HUSB238::m_read_byte_from_register(uint8_t device_register)
 {
-    m_my_wire.write(device_register);
-    m_my_wire.requestFrom(m_i2c_address, 1);
-    uint8_t response = m_my_wire.read();
+    m_wire->write(device_register);
+    m_wire->requestFrom(m_i2c_address, 1);
+    uint8_t response = m_wire->read();
     return response;
 }

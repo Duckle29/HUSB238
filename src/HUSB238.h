@@ -4,10 +4,13 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+extern TwoWire Wire; /**< Forward declarations of Wire for board/variant
+                        combinations that don't have a default 'Wire' */
+
 class HUSB238
 {
   public:
-	HUSB238(TwoWire my_wire);
+	HUSB238(TwoWire* myWire = &Wire);
 
 	enum pd_response {
 		PD_NO_RESPONSE = 0,
@@ -74,7 +77,7 @@ class HUSB238
 		uint16_t combined;
 
 	} status;
-  	
+  	TwoWire* m_wire;
 	uint64_t begin();
   	uint64_t get_capabilities();
   	void set_voltage(voltage_select voltage);
@@ -83,7 +86,6 @@ class HUSB238
   	uint16_t get_pd_current();
 
   private:
-	TwoWire m_my_wire;
 
 	const uint8_t m_i2c_address = 0x08;
 	const uint8_t m_capability_reg_count = 6;

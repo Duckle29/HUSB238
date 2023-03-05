@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <HUSB238.h>
 
-HUSB238 USB_PD(Wire);
+HUSB238 USB_PD;
 
 void setup()
 {
