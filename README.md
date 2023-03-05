@@ -1,3 +1,5 @@
+[![LibraryBuild](https://github.com/Duckle29/husb238/actions/workflows/LibraryBuild.yml/badge.svg)](https://github.com/Duckle29/husb238/actions/workflows/LibraryBuild.yml)
+
 This is a small library that lets you easily communicate with and configure a
 Hynetek HUSB328 USB-PD negotiation chip.
 
