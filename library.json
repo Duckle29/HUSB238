@@ -1,6 +1,6 @@
 {
     "name": "HUSB238",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": "i2c, HUSB238, usb-pd",
     "description": "Driver library for the HUSB238 USB-PD IC",
     "repository": {
