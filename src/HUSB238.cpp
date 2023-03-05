@@ -1,4 +1,4 @@
-#include "husb238.h"
+#include "HUSHB238.h"
 
 HUSB238::HUSB238(TwoWire my_wire)
 {

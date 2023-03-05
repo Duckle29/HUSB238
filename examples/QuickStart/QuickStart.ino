@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include <husb238.h>
+#include <HUSHB238.h>
 
 HUSB238 USB_PD(Wire);
 
