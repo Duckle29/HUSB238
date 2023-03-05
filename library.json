@@ -1,0 +1,20 @@
+{
+    "name": "HUSB238",
+    "version": "1.0.0",
+    "keywords": "i2c, HUSB238, usb-pd",
+    "description": "Driver library for the HUSB238 USB-PD IC",
+    "repository": {
+	"type": "git",
+	"url": "https://github.com/Duckle29/HUSB238.git"
+    },
+    "authors": [
+	{
+	    "name": "Mikkel Jeppesen",
+        "url": "https://github.com/Duckle29/",
+	    "maintainer": true
+	}
+    ],
+    "frameworks": "arduino",
+    "platforms": "*",
+    "license": "BSD-3-Clause"
+}
